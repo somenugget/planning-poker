@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2018_09_02_065814) do
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
-    t.string "uri_hash"
+    t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

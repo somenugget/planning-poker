@@ -5,6 +5,6 @@ RSpec.describe Room::Create do
 
     expect(result.success?).to be_truthy
     expect(result[:model].id).to be_eql(Room.find_by(room_params).id)
-    expect(result[:model].uri_hash.size).to be_eql(Room::URI_HASH_LENGTH)
+    expect(result[:model].slug).not_to be_falsey
   end
 end

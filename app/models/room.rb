@@ -1,3 +1,5 @@
 class Room < ApplicationRecord
-  URI_HASH_LENGTH = 10
+  def to_param
+    slug
+  end
 end

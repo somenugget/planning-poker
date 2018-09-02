@@ -11,8 +11,8 @@ class Room::Create < Trailblazer::Operation
 
   def generate_hash!(_options, model:, **)
     loop do
-      model.uri_hash = SecureRandom.hex(Room::URI_HASH_LENGTH / 2)
-      break unless Room.where(uri_hash: model.uri_hash).exists?
+      model.slug = SecureRandom.hex
+      break unless Room.where(slug: model.slug).exists?
     end
 
     true
