@@ -1,4 +1,14 @@
 .row
-  .col-8
-    h1.text-center
+  .col-12
+    h1
       = model.name
+    h2
+      = current_user.name
+
+    hr
+
+    ul
+      - room_users.each do |room_user|
+        li
+          = room_user.admin? ? 'Admin: ' : ''
+          = room_user.user.name

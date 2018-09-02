@@ -1,0 +1,19 @@
+.new
+  h1.text-center New planning
+
+  = form_for model do |f|
+    = f.fields_for :user do |u|
+      .row.justify-content-center
+        .col-sm-8
+          .form-group
+            = u.text_field :name, placeholder: 'Username', class: 'form-control'
+
+    = f.fields_for :room do |r|
+      .row.justify-content-center
+        .col-sm-8
+          .form-group
+            = r.text_field :name, placeholder: 'Planning room name', class: 'form-control'
+
+    .row.justify-content-center
+      .col-sm-8
+        = f.submit 'Start', class: 'btn btn-primary'
