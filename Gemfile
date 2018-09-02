@@ -19,6 +19,8 @@ gem 'webpacker'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'dry-validation'
+gem 'reform', '~> 2.3.0.rc1'
+gem 'reform-rails', '~> 0.2.0.rc2'
 
 gem 'trailblazer'
 gem 'trailblazer-cells'
@@ -44,6 +46,8 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
+
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
 
