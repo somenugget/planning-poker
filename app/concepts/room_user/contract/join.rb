@@ -2,7 +2,7 @@ require 'reform'
 require 'reform/form/dry'
 
 module RoomUser::Contract
-  class CreateWithUser < Reform::Form
+  class Join < Reform::Form
     include Dry
 
     property :admin

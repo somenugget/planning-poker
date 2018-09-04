@@ -10,7 +10,7 @@ class RoomUser::CreateWithRelations < Trailblazer::Operation
   step :save_room
   step :persist
 
-  def save_user(options, params:, **)
+  def save_user(_options, params:, **)
     result = User::Create.(params: params[:room_user])
     params[:room_user][:user] = result[:model]
 

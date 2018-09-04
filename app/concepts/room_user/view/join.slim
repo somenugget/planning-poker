@@ -2,7 +2,7 @@
   h1.text-center Join room: #{room_name}
   h2.text-center Created by: #{admin_name}
 
-  = form_for model, url: join_room_room_path(room) do |f|
+  = form_for model, url: join_path(room) do |f|
     = f.fields_for :user do |u|
       .row.justify-content-center
         .col-sm-8

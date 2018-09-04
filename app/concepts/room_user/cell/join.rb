@@ -1,4 +1,4 @@
-module Room::Cell
+module RoomUser::Cell
   class Join < Trailblazer::Cell
     include ActionView::RecordIdentifier
 
