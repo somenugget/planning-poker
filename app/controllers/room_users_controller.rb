@@ -18,8 +18,7 @@ class RoomUsersController < ApplicationController
 
   def create_room
     run(RoomUser::CreateWithRelations, params: hash_params) do |result|
-      session[:current_user_id] = result[:model].user.id
-      return redirect_to room_path result[:model].room
+      return room_user_created result[:model]
     end
 
     render cell(RoomUser::Cell::New, @form)
@@ -32,10 +31,14 @@ class RoomUsersController < ApplicationController
 
   def join_room
     run(RoomUser::Join, params: hash_params) do |result|
-      session[:current_user_id] = result[:model].user.id
-      return redirect_to room_path result[:model].room
+      return room_user_created result[:model]
     end
 
     render cell(RoomUser::Cell::Join, result[:model], room: result[:room])
+  end
+
+  def room_user_created(room_user)
+    self.current_user = room_user.user
+    redirect_to room_path room_user.room
   end
 end
