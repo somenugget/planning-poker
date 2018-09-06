@@ -32,6 +32,8 @@ class RoomUsersController < ApplicationController
 
   def join_room
     run(RoomUser::Join, params: hash_params) do |result|
+      Cables::UserJoinedRoomJob.perform_later result[:model]
+
       return room_user_created result[:model]
     end
 

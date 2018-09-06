@@ -49,6 +49,8 @@ group :development do
 end
 
 group :test do
+  gem 'action-cable-testing'
+
   gem 'coveralls', require: false
 
   gem 'database_cleaner'

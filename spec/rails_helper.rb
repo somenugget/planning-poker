@@ -16,6 +16,8 @@ require 'database_cleaner'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 
+require 'action_cable/testing/rspec'
+
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
