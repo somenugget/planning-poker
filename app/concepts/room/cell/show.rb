@@ -9,11 +9,7 @@ module Room::Cell
     end
 
     def current_user_admin?
-      room_users.find_by(user_id: current_user.id).admin?
-    end
-
-    def room_users
-      model.room_users.includes(:user).order(:admin)
+      model.admin.id == current_user.id
     end
 
     def link_to_share
@@ -21,7 +17,9 @@ module Room::Cell
     end
 
     def json
-      Room::Representer::Json.new(model).to_json.gsub(/"/, '&quot;'.freeze)
+      Room::Representer::Json.new(model)
+                             .to_json(user_options: { current_user: current_user })
+                             .gsub(/"/, '&quot;'.freeze)
     end
   end
 end

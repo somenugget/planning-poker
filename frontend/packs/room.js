@@ -9,6 +9,4 @@ document.addEventListener('DOMContentLoaded', () => {
     el,
     render: (createElement) => createElement(Room, { props })
   });
-
-  console.log(app)
 });

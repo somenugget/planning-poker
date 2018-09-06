@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <h1>{{ name }}</h1>
+    <p v-for="room_user in room_users">
+      {{ room_user['admin?'] ? 'Admin: ' : '' }}
+      {{ room_user.user.name }}
+    </p>
     <p v-for="message in messages">{{ message }}</p>
     <input type="text" v-model="newMessage">
     <button v-on:click="sendMessage">Add</button>
@@ -12,7 +15,9 @@ import ActionCable from 'actioncable';
 
 export default {
   props: {
-    name: String
+    name: String,
+    room_users: Array,
+    current_user: Object
   },
   mounted() {
     const wsPath = document.querySelector('meta[name="action-cable-url"]').content || '/websocket';

@@ -8,13 +8,6 @@
 
     hr
 
-    ul
-      - room_users.each do |room_user|
-        li
-          = room_user.admin? ? 'Admin: ' : ''
-          = room_user.user.name
-    pre
-      = json
     #room-root data-props="#{json}"
 
   = javascript_pack_tag 'room'

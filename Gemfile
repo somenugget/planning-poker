@@ -22,13 +22,15 @@ gem 'dry-validation'
 gem 'reform', '~> 2.3.0.rc1'
 gem 'reform-rails', '~> 0.2.0.rc2'
 
-gem 'trailblazer'
+gem 'trailblazer', '~> 2.1.0.rc1'
 gem 'trailblazer-cells'
 gem 'trailblazer-rails'
 
 gem 'cells-rails'
 gem 'cells-slim'
-gem 'representable'
+
+gem 'multi_json'
+gem 'roar'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
