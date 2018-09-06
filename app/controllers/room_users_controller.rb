@@ -17,7 +17,8 @@ class RoomUsersController < ApplicationController
   end
 
   def create_room
-    run(RoomUser::CreateWithRelations, params: hash_params) do |result|
+    run RoomUser::CreateWithRelations,
+        params: hash_params.deep_merge(room_user: { admin: true }) do |result|
       return room_user_created result[:model]
     end
 

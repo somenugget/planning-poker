@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>{{ name }}</h1>
     <p v-for="message in messages">{{ message }}</p>
     <input type="text" v-model="newMessage">
     <button v-on:click="sendMessage">Add</button>
@@ -10,6 +11,9 @@
 import ActionCable from 'actioncable';
 
 export default {
+  props: {
+    name: String
+  },
   mounted() {
     const wsPath = document.querySelector('meta[name="action-cable-url"]').content || '/websocket';
     const wsBaseUrl = 'ws://localhost:3000';

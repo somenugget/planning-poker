@@ -28,6 +28,7 @@ gem 'trailblazer-rails'
 
 gem 'cells-rails'
 gem 'cells-slim'
+gem 'representable'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 

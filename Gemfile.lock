@@ -328,6 +328,7 @@ DEPENDENCIES
   rails (~> 5.2.1)
   reform (~> 2.3.0.rc1)
   reform-rails (~> 0.2.0.rc2)
+  representable
   rspec-rails
   selenium-webdriver
   slim-rails
