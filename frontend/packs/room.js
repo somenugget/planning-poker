@@ -1,5 +1,8 @@
 import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
 import Room from '../components/room'
+
+Vue.use(BootstrapVue);
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.getElementById('room-root');

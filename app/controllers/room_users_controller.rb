@@ -18,7 +18,7 @@ class RoomUsersController < ApplicationController
 
   def create_room
     run RoomUser::CreateWithRelations,
-        params: hash_params.deep_merge(room_user: { admin: true }) do |result|
+        params: hash_params.deep_merge(room_user: { admin: true, online: true }) do |result|
       return room_user_created result[:model]
     end
 
@@ -31,7 +31,7 @@ class RoomUsersController < ApplicationController
   end
 
   def join_room
-    run(RoomUser::Join, params: hash_params) do |result|
+    run(RoomUser::Join, params: hash_params.deep_merge(room_user: { online: true })) do |result|
       Cables::UserJoinedRoomJob.perform_later result[:model]
 
       return room_user_created result[:model]
