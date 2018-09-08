@@ -1,12 +1,14 @@
+require 'simplecov'
+
 if ENV['TRAVIS'] == 'true'
   require 'coveralls'
-  require 'simplecov'
   Coveralls.wear!
 
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-  SimpleCov.start('rails') do
-    add_filter '/spec'
-  end
+end
+
+SimpleCov.start('rails') do
+  add_filter '/spec'
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
