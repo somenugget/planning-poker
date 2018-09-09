@@ -1,12 +1,14 @@
+require 'simplecov'
+
 if ENV['TRAVIS'] == 'true'
   require 'coveralls'
-  require 'simplecov'
   Coveralls.wear!
 
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-  SimpleCov.start('rails') do
-    add_filter '/spec'
-  end
+end
+
+SimpleCov.start('rails') do
+  add_filter '/spec'
 end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -15,6 +17,8 @@ require 'database_cleaner'
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
+
+require 'action_cable/testing/rspec'
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 

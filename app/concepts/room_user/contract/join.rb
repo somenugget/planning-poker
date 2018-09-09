@@ -1,16 +1,9 @@
-require 'reform'
-require 'reform/form/dry'
-
 module RoomUser::Contract
-  class Join < Reform::Form
-    include Dry
-
-    property :admin
+  class Join < BaseCreate
     property :user
     property :room_id
 
     validation do
-      required(:admin).bool?
       required(:room_id).int?
 
       required(:user).schema do

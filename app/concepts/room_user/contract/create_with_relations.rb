@@ -1,25 +1,13 @@
-require 'reform'
-require 'reform/form/dry'
-
 module RoomUser::Contract
-  class CreateWithRelations < Reform::Form
-    include Dry
-
-    property :admin
-    property :user
-    property :room
-
+  class CreateWithRelations < BaseCreate
     validation do
-      required(:admin).bool?
-
       required(:user).schema do
-        required(:name).filled
+        required(:name).str?
       end
 
       required(:room).schema do
-        required(:name).filled
+        required(:name).str?
       end
     end
-
   end
 end

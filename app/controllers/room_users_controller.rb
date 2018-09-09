@@ -17,9 +17,9 @@ class RoomUsersController < ApplicationController
   end
 
   def create_room
-    run(RoomUser::CreateWithRelations, params: hash_params) do |result|
-      session[:current_user_id] = result[:model].user.id
-      return redirect_to room_path result[:model].room
+    run RoomUser::CreateWithRelations,
+        params: hash_params.deep_merge(room_user: { admin: true, online: true }) do |result|
+      return room_user_created result[:model]
     end
 
     render cell(RoomUser::Cell::New, @form)
@@ -31,11 +31,17 @@ class RoomUsersController < ApplicationController
   end
 
   def join_room
-    run(RoomUser::Join, params: hash_params) do |result|
-      session[:current_user_id] = result[:model].user.id
-      return redirect_to room_path result[:model].room
+    run(RoomUser::Join, params: hash_params.deep_merge(room_user: { online: true })) do |result|
+      Cables::UserJoinedRoomJob.perform_later result[:model]
+
+      return room_user_created result[:model]
     end
 
     render cell(RoomUser::Cell::Join, result[:model], room: result[:room])
+  end
+
+  def room_user_created(room_user)
+    self.current_user = room_user.user
+    redirect_to room_path room_user.room
   end
 end

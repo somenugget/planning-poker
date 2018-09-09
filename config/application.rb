@@ -20,6 +20,8 @@ module PlanningPoker
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    config.action_cable.mount_path = '/websocket'
+
     config.generators do |g|
       g.test_framework :rspec
     end

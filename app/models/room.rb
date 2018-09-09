@@ -5,4 +5,8 @@ class Room < ApplicationRecord
   def to_param
     slug
   end
+
+  def admin
+    room_users.includes(:user).find_by(admin: true)
+  end
 end
