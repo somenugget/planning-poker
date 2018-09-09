@@ -7,24 +7,43 @@ RSpec.describe RoomChannel, type: :channel do
     stub_connection current_user: user
   end
 
-  it 'rejects when no room id' do
-    subscribe
-    expect(subscription).to be_rejected
+  context 'without room id' do
+    it 'rejects' do
+      subscribe
+      expect(subscription).to be_rejected
+    end
   end
 
-  it 'rejects when no room id' do
-    room = Room.create name: 'Planning'
+  context 'with room id' do
+    let(:room) { Room.create name: 'Planning' }
 
-    expect(RoomUser::Online).to(
-      receive(:call)
-        .with(params: { room_id: room.id, user_id: user.id })
-        .and_return(double(:success? => true, :[] => :fake))
-    )
-    expect(Cables::UserOnlineJob).to receive(:perform_later).with(:fake)
+    before do
+      expect(RoomUser::Online).to(
+        receive(:call)
+          .with(params: { room_id: room.id, user_id: user.id })
+          .and_return(double(:success? => true, :[] => :fake))
+      )
+      expect(Cables::UserOnlineJob).to receive(:perform_later).with(:fake)
 
-    subscribe room_id: room.id
+      subscribe room_id: room.id
+    end
 
-    expect(subscription).to be_confirmed
-    expect(streams).to include("room:#{room.id}")
+    it 'subscribes' do
+      expect(subscription).to be_confirmed
+      expect(streams).to include("room:#{room.id}")
+    end
+
+    it 'unsubscribes' do
+      expect(RoomUser::Offline).to(
+        receive(:call)
+          .with(params: { room_id: room.id, user_id: user.id })
+          .and_return(double(:success? => true, :[] => :fake))
+      )
+      expect(Cables::UserOfflineJob).to receive(:perform_later).with(:fake)
+
+      subscription.unsubscribe_from_channel
+
+      expect(streams).to be_empty
+    end
   end
 end

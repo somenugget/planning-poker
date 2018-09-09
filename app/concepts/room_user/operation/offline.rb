@@ -1,14 +1,14 @@
-class RoomUser::Online < Trailblazer::Operation
+class RoomUser::Offline < Trailblazer::Operation
   step :find
-  step :set_online
+  success :set_offline
   step :persist
 
   def find(options, params:, **)
     options[:model] = RoomUser.find_by_relations!(params)
   end
 
-  def set_online(options, **)
-    options[:model].online = true
+  def set_offline(options, **)
+    options[:model].online = false
   end
 
   def persist(options, **)

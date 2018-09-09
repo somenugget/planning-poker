@@ -3,6 +3,7 @@ class RoomChannel < ApplicationCable::Channel
     return reject unless params[:room_id]
 
     stream_from channel_name
+
     result = RoomUser::Online.(params: { room_id: params[:room_id], user_id: current_user.id })
 
     Cables::UserOnlineJob.perform_later(result[:model]) if result.success?
@@ -10,6 +11,14 @@ class RoomChannel < ApplicationCable::Channel
 
   def receive(data)
     ActionCable.server.broadcast channel_name, data
+  end
+
+  def unsubscribed
+    return unless params[:room_id]
+
+    result = RoomUser::Offline.(params: { room_id: params[:room_id], user_id: current_user.id })
+
+    Cables::UserOfflineJob.perform_later(result[:model]) if result.success?
   end
 
   def unfollow
