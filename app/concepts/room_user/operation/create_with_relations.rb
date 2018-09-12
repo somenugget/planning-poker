@@ -8,25 +8,34 @@ class RoomUser::CreateWithRelations < Trailblazer::Operation
   step Contract::Validate(key: :room_user)
   step :save_user
   step :save_room
+  step :save_question
   step :persist
 
   def save_user(_options, params:, **)
-    result = User::Create.(params: params[:room_user])
-    params[:room_user][:user] = result[:model]
-
-    result.success?
+    save_entity :user, User::Create, params
   end
 
   def save_room(_options, params:, **)
-    result = Room::Create.(params: params[:room_user])
-    params[:room_user][:room] = result[:model]
+    save_entity :room, Room::Create, params
+  end
 
-    result.success?
+  def save_question(_options, params:, **)
+    params[:room_user][:question][:room] = params[:room_user][:room]
+    save_entity :question, Question::Create, params
   end
 
   def persist(options, params:, **)
     result = RoomUser::Create.(params: params)
     options[:model] = result[:model]
+
+    result.success?
+  end
+
+  private
+
+  def save_entity(entity_name, operation, params)
+    result = operation.(params: params[:room_user])
+    params[:room_user][entity_name] = result[:model]
 
     result.success?
   end

@@ -6,11 +6,11 @@ module Question::Contract
     include Dry
 
     property :content
-    property :room_id
+    property :room
 
     validation do
       required(:content).min_size? 3
-      required(:room_id).int?
+      required(:room).filled
     end
   end
 end
