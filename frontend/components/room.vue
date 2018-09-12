@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="row justify-content-between">
     <div class="col-md-9 col-xs-12">
-      Question will be here
+      {{ question.content }}
     </div>
     <div class="col-md-3 col-xs-12">
       <b-list-group>
@@ -28,6 +28,7 @@ export default {
   props: {
     id: Number,
     name: String,
+    question: Object,
     room_users: Array,
     current_user: Object
   },

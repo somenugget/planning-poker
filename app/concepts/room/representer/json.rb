@@ -11,6 +11,10 @@ module Room::Representer
     property :id
     property :name
 
+    property :question do
+      property :content
+    end
+
     collection :room_users, decorator: RoomUser::Representer::Json
   end
 end
