@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   post '/:slug/join', controller: :room_users, action: :create, as: :join
 
   resources :room_users, only: %i[new create]
+
+  namespace :api do
+    resource :vote, only: [:create]
+  end
 end

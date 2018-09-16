@@ -4,19 +4,14 @@
       {{ question.content }}
     </div>
     <div class="col-md-3 col-xs-12">
-      <b-list-group>
-        <b-list-group-item v-for="roomUser in roomUsers" :key="roomUser.id" class="user-row">
-          {{ roomUser.user.name }}
-          <b-badge v-if="roomUser.admin" variant="primary" class="user-row__admin">Admin</b-badge>
-          <b-badge v-if="roomUser.online" class="user-row__online" pill></b-badge>
-        </b-list-group-item>
-      </b-list-group>
+      <users-list :roomUsers="roomUsers"></users-list>
     </div>
   </div>
 </template>
 
 <script>
 import ActionCable from 'actioncable';
+import UsersList from './UsersList';
 
 const messageToMethodMapping = {
   user_joined: 'addRoomUser',
@@ -25,6 +20,9 @@ const messageToMethodMapping = {
 };
 
 export default {
+  components: {
+    'users-list': UsersList
+  },
   props: {
     id: Number,
     name: String,
@@ -86,12 +84,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .user-row__online {
-    background: chartreuse;
-    display: inline-block;
-    height: 10px;
-    padding: 0;
-    width: 10px;
-  }
-</style>
+<style lang="scss" scoped></style>
