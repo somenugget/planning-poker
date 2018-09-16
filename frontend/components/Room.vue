@@ -1,7 +1,12 @@
 <template>
   <div id="app" class="row justify-content-between">
     <div class="col-md-9 col-xs-12">
-      {{ question.content }}
+      <div class="row">
+        <div class="col-sm-12">
+          {{ question.content }}
+        </div>
+      </div>
+      <estimations :estimation-options="estimation_options" :room-user="currentRoomUser"/>
     </div>
     <div class="col-md-3 col-xs-12">
       <users-list :roomUsers="roomUsers"></users-list>
@@ -12,6 +17,7 @@
 <script>
 import ActionCable from 'actioncable';
 import UsersList from './UsersList';
+import Estimations from './Estimations';
 
 const messageToMethodMapping = {
   user_joined: 'addRoomUser',
@@ -21,20 +27,23 @@ const messageToMethodMapping = {
 
 export default {
   components: {
-    'users-list': UsersList
+    'users-list': UsersList,
+    'estimations': Estimations,
   },
   props: {
     id: Number,
     name: String,
     question: Object,
     room_users: Array,
-    current_user: Object
+    current_user: Object,
+    estimation_options: Array,
   },
   mounted() {
     const wsPath = document.querySelector('meta[name="action-cable-url"]').content || '/websocket';
     const wsBaseUrl = `ws://${location.host}`;
     const cable = ActionCable.createConsumer(`${wsBaseUrl}${wsPath}`);
     const component = this;
+    console.log(component);
 
     this.channel = cable.subscriptions.create({ channel: 'RoomChannel', room_id: this.id }, {
       received({ message, data }) {
@@ -45,10 +54,15 @@ export default {
       }
     });
   },
-  data: function () {
+  data() {
     return {
       roomUsers: [...this.room_users],
       timersToMarkOffline: {}
+    }
+  },
+  computed: {
+    currentRoomUser() {
+      return this.room_users.find(roomUser => roomUser.user.id === this.current_user.id);
     }
   },
   methods: {

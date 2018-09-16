@@ -10,5 +10,10 @@ module RoomUser::Representer
     property :online
 
     property :user, decorator: User::Representer::Json
+
+    property :vote do
+      property :id
+      property :estimation
+    end
   end
 end

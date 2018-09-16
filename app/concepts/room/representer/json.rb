@@ -11,6 +11,10 @@ module Room::Representer
     property :id
     property :name
 
+    property :current_user,
+             decorator: User::Representer::Json,
+             getter: ->(options:, **) { options[:user_options][:current_user] }
+
     property :question do
       property :content
     end
