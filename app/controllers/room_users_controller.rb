@@ -1,5 +1,6 @@
 class RoomUsersController < ApplicationController
   def new
+    return join_user_to_room if current_user && params[:slug]
     return new_join if params[:slug]
     new_room
   end
@@ -30,8 +31,17 @@ class RoomUsersController < ApplicationController
     render cell(RoomUser::Cell::Join, result[:model], room: result[:room])
   end
 
+  def join_user_to_room
+    join RoomUser::JoinExistingUser, slug: params[:slug], room_user: { online: true,
+                                                                       user: current_user }
+  end
+
   def join_room
-    run(RoomUser::Join, params: hash_params.deep_merge(room_user: { online: true })) do |result|
+    join RoomUser::Join, hash_params.deep_merge(room_user: { online: true })
+  end
+
+  def join(operation_class, operation_params)
+    run(operation_class, params: operation_params) do |result|
       Cables::UserJoinedRoomJob.perform_later result[:model]
 
       return room_user_created result[:model]

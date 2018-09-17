@@ -43,7 +43,6 @@ export default {
     const wsBaseUrl = `ws://${location.host}`;
     const cable = ActionCable.createConsumer(`${wsBaseUrl}${wsPath}`);
     const component = this;
-    console.log(component);
 
     this.channel = cable.subscriptions.create({ channel: 'RoomChannel', room_id: this.id }, {
       received({ message, data }) {

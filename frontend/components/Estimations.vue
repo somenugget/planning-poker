@@ -23,6 +23,11 @@ export default {
     roomUser: Object
   },
   mounted() {
+    if (!this.roomUser.vote) {
+      this.voted = null;
+      return;
+    }
+
     const option = this.estimationOptions.find(({ id, estimation }) => this.roomUser.vote.estimation === estimation);
     this.voted = option ? option.id : null;
   },

@@ -9,14 +9,12 @@ gem 'pg', '>= 0.18', '< 2.0'
 
 gem 'puma', '~> 3.11'
 
-gem 'slim-rails'
-
-gem 'webpacker'
-
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+gem 'pundit'
 
 gem 'dry-validation'
 gem 'reform', '~> 2.3.0.rc1'
@@ -28,6 +26,8 @@ gem 'trailblazer-rails'
 
 gem 'cells-rails'
 gem 'cells-slim'
+gem 'slim-rails'
+gem 'webpacker'
 
 gem 'multi_json'
 gem 'roar'
