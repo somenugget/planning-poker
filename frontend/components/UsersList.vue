@@ -4,6 +4,7 @@
       {{ roomUser.user.name }}
       <b-badge v-if="roomUser.admin" variant="primary" class="user-row__admin">Admin</b-badge>
       <b-badge v-if="roomUser.online" class="user-row__online" pill></b-badge>
+      <b-badge v-if="roomUser.vote" class="user-row__voted float-right">voted</b-badge>
     </b-list-group-item>
   </b-list-group>
 </template>

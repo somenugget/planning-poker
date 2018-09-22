@@ -19,6 +19,8 @@ module Room::Representer
       property :content
     end
 
-    collection :room_users, decorator: RoomUser::Representer::Json
+    collection :room_users,
+               decorator: RoomUser::Representer::Json,
+               getter: ->(represented:, **) { represented.room_users.order(admin: :desc, online: :desc) }
   end
 end
