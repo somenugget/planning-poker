@@ -22,7 +22,8 @@ import Estimations from './Estimations';
 const messageToMethodMapping = {
   user_joined: 'addRoomUser',
   user_online: 'markUserOnline',
-  user_offline: 'markUserOffline'
+  user_offline: 'markUserOffline',
+  user_voted: 'markUserVoted',
 };
 
 export default {
@@ -76,6 +77,9 @@ export default {
       this.timersToMarkOffline[id] = setTimeout(() => {
         this.changeRoomUserInList(id, { online: false });
       }, 1000);
+    },
+    markUserVoted(roomUser) {
+      this.changeRoomUserInList(roomUser.id, roomUser);
     },
     changeRoomUserInList(id, newRoomUser) {
       this.roomUsers = this.roomUsers.map((roomUser) => {
