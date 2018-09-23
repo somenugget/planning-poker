@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :room_users, only: %i[new create]
 
   namespace :api do
-    resource :vote, only: [:create]
+    resources :votes, only: [:create]
+    resources :rooms, only: [:update]
   end
 end

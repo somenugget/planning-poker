@@ -2,12 +2,18 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 export default {
   vote(roomUserId, estimation) {
-    return this._request('/api/vote', 'POST', {
+    return this._request('/api/votes', 'POST', {
       vote: {
         estimation,
         room_user_id: roomUserId,
       }
     });
+  },
+
+  closeRoom(roomId) {
+    return this._request(`/api/rooms/${roomId}`, 'PUT', {
+      closed: true
+    })
   },
 
   _request(url, method = 'GET', body = {}, options = {}) {

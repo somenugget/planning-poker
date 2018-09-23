@@ -1,12 +1,25 @@
 <template>
   <div id="app" class="row justify-content-between">
     <div class="col-md-9 col-xs-12">
-      <link-to-share :url="link_to_share" v-if="link_to_share" />
+      <div v-if="isCurrentUserAdmin">
+        <link-to-share :url="link_to_share" />
+        <b-button @click="finishVoting" variant="success">Finish voting</b-button>
+        <hr />
+      </div>
       <question :question="question.content" />
-      <estimations :estimation-options="estimation_options" :room-user="currentRoomUser" />
+      <hr />
+      <estimations
+          :isClosed="isClosed"
+          :estimation-options="estimation_options"
+          :room-user="currentRoomUser"
+      />
     </div>
     <div class="col-md-3 col-xs-12">
-      <users-list :roomUsers="roomUsers" />
+      <users-list
+          :isClosed="isClosed"
+          :roomUsers="roomUsers"
+          :average="averageVote"
+      />
     </div>
   </div>
 </template>
@@ -17,6 +30,7 @@ import LinkToShare from './LinkToShare';
 import Question from './Question';
 import Estimations from './Estimations';
 import UsersList from './UsersList';
+import api from '../utils/api'
 
 const messageToMethodMapping = {
   user_joined: 'addRoomUser',
@@ -34,6 +48,8 @@ export default {
   },
   props: {
     id: Number,
+    average: Number,
+    closed: Boolean,
     name: String,
     link_to_share: String,
     question: Object,
@@ -59,12 +75,17 @@ export default {
   data() {
     return {
       roomUsers: [...this.room_users],
+      averageVote: this.average || 2,
+      isClosed: this.closed || false,
       timersToMarkOffline: {}
     }
   },
   computed: {
     currentRoomUser() {
       return this.room_users.find(roomUser => roomUser.user.id === this.current_user.id);
+    },
+    isCurrentUserAdmin() {
+      return this.currentRoomUser.admin;
     }
   },
   methods: {
@@ -98,6 +119,12 @@ export default {
 
         return roomUser;
       });
+    },
+    finishVoting() {
+      api.closeRoom(this.id).then((result) => {
+        this.isClosed = true;
+        this.averageVote = result.average;
+      })
     }
   }
 }

@@ -4,7 +4,7 @@
       <b-button
           block
           type="button"
-          :disabled="estimationOption.id === voting"
+          :disabled="isClosed || (estimationOption.id === voting)"
           :variant="estimationOption.id === voted ? 'primary' : 'outline-primary'"
           @click="vote(estimationOption)"
       >
@@ -19,6 +19,7 @@ import api from '../utils/api';
 
 export default {
   props: {
+    isClosed: Boolean,
     estimationOptions: Array,
     roomUser: Object
   },

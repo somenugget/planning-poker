@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     id: 5,
     label: '8',
     estimation: 8
-  }]; // TODO: think, how to make different sets of estimation options
+  }]; // TODO: think, how to store in DB different sets of estimation options
 
   new Vue({
     el,
