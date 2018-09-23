@@ -1,23 +1,22 @@
 <template>
   <div id="app" class="row justify-content-between">
     <div class="col-md-9 col-xs-12">
-      <div class="row">
-        <div class="col-sm-12">
-          {{ question.content }}
-        </div>
-      </div>
-      <estimations :estimation-options="estimation_options" :room-user="currentRoomUser"/>
+      <link-to-share :url="link_to_share" v-if="link_to_share" />
+      <question :question="question.content" />
+      <estimations :estimation-options="estimation_options" :room-user="currentRoomUser" />
     </div>
     <div class="col-md-3 col-xs-12">
-      <users-list :roomUsers="roomUsers"></users-list>
+      <users-list :roomUsers="roomUsers" />
     </div>
   </div>
 </template>
 
 <script>
 import ActionCable from 'actioncable';
-import UsersList from './UsersList';
+import LinkToShare from './LinkToShare';
+import Question from './Question';
 import Estimations from './Estimations';
+import UsersList from './UsersList';
 
 const messageToMethodMapping = {
   user_joined: 'addRoomUser',
@@ -28,12 +27,15 @@ const messageToMethodMapping = {
 
 export default {
   components: {
-    'users-list': UsersList,
+    'link-to-share': LinkToShare,
+    'question': Question,
     'estimations': Estimations,
+    'users-list': UsersList,
   },
   props: {
     id: Number,
     name: String,
+    link_to_share: String,
     question: Object,
     room_users: Array,
     current_user: Object,
