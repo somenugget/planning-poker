@@ -9,6 +9,8 @@ module Api
 
       return render_errors ['Could not calculate result'] if calculation_result.failure?
 
+      Cables::RoomClosed.perform_later result[:model].id, calculation_result[:average]
+
       render json: { average: calculation_result[:average] }
     end
   end

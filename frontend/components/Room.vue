@@ -36,7 +36,8 @@ const messageToMethodMapping = {
   user_joined: 'addRoomUser',
   user_online: 'markUserOnline',
   user_offline: 'markUserOffline',
-  user_voted: 'markUserVoted'
+  user_voted: 'markUserVoted',
+  room_closed: 'closeRoom'
 };
 
 export default {
@@ -121,10 +122,11 @@ export default {
       });
     },
     finishVoting () {
-      api.closeRoom(this.id).then((result) => {
-        this.isClosed = true;
-        this.averageVote = result.average;
-      });
+      api.closeRoom(this.id).then(this.closeRoom);
+    },
+    closeRoom ({ average }) {
+      this.isClosed = true;
+      this.averageVote = average;
     }
   }
 };
