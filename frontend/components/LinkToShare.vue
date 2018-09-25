@@ -12,22 +12,24 @@ export default {
   props: {
     url: String
   },
-  data() {
+  data () {
     return {
-      copied: false,
-    }
+      copied: false
+    };
   },
   methods: {
-    copyUrlToClipboard({ target }) {
+    copyUrlToClipboard ({ target }) {
       target.blur();
       navigator.clipboard.writeText(this.url)
-      .then(() => {
-        this.copied = true;
+        .then(() => {
+          this.copied = true;
 
-        setTimeout(() => this.copied = false , 3000);
-      })
-      .catch(() => console.log('Link was not copied to clipboard'));
+          setTimeout(() => {
+            this.copied = false;
+          }, 3000);
+        })
+        .catch(() => console.log('Link was not copied to clipboard'));
     }
   }
-}
+};
 </script>

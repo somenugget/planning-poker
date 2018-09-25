@@ -11,5 +11,5 @@ export default {
   props: {
     question: String
   }
-}
+};
 </script>

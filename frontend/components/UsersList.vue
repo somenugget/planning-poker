@@ -24,7 +24,7 @@ export default {
     average: Number,
     roomUsers: Array
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

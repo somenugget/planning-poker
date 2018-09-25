@@ -23,7 +23,7 @@ export default {
     estimationOptions: Array,
     roomUser: Object
   },
-  mounted() {
+  mounted () {
     if (!this.roomUser.vote) {
       this.voted = null;
       return;
@@ -32,14 +32,14 @@ export default {
     const option = this.estimationOptions.find(({ id, estimation }) => this.roomUser.vote.estimation === estimation);
     this.voted = option ? option.id : null;
   },
-  data() {
+  data () {
     return {
       voted: null,
       voting: null
-    }
+    };
   },
   methods: {
-    vote({ id, estimation }) {
+    vote ({ id, estimation }) {
       this.voting = id;
 
       api
@@ -48,12 +48,10 @@ export default {
           this.voted = id;
           this.voting = null;
         })
-        .catch(() => this.voting = null);
+        .catch(() => {
+          this.voting = null;
+        });
     }
   }
-}
+};
 </script>
-
-<style lang="scss" scoped>
-
-</style>

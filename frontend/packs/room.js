@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
-import Room from '../components/Room'
+import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue';
+import Room from '../components/Room';
 
 Vue.use(BootstrapVue);
 
@@ -31,6 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   new Vue({
     el,
-    render: (createElement) => createElement(Room, { props: { estimation_options, ...props } })
+    render: (createElement) => createElement(Room, { props: { estimation_options, ...props }})
   });
 });
