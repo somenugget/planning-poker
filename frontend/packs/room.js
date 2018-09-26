@@ -7,6 +7,7 @@ Vue.use(BootstrapVue);
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.getElementById('room-root');
   const props = JSON.parse(el.dataset.props);
+  console.log(props);
   const estimation_options = [{
     id: 1,
     label: '1/2',

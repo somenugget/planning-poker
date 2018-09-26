@@ -1,15 +1,18 @@
 <template>
   <div id="app" class="row justify-content-between">
     <div class="col-md-9 col-xs-12">
-      <div v-if="isCurrentUserAdmin">
+      <div v-if="isCurrentUserAdmin && !isClosed">
         <link-to-share :url="link_to_share" />
         <b-button @click="finishVoting" variant="success">Finish voting</b-button>
         <hr />
       </div>
+      <div v-if="isClosed">
+        <h5>Voting is closed</h5>
+      </div>
       <question :question="question.content" />
       <hr />
       <estimations
-          :isClosed="isClosed"
+          v-if="!isClosed"
           :estimation-options="estimation_options"
           :room-user="currentRoomUser"
       />
@@ -76,8 +79,8 @@ export default {
   data () {
     return {
       roomUsers: [...this.room_users],
-      averageVote: this.average || 2,
-      isClosed: this.closed || false,
+      averageVote: this.average,
+      isClosed: this.closed,
       timersToMarkOffline: {}
     };
   },

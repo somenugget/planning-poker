@@ -16,10 +16,15 @@ module Room::Cell
       join_url(model) if current_user_admin?
     end
 
+    def average
+      Result::Calculate.(params: { room_users: model.room_users })[:average] if model.closed?
+    end
+
     def json
       Room::Representer::Json.new(model)
                              .to_json(user_options: { current_user: current_user,
-                                                      link_to_share: link_to_share })
+                                                      link_to_share: link_to_share,
+                                                      average: average })
                              .gsub(/"/, '&quot;'.freeze)
     end
   end

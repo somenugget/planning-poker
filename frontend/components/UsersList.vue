@@ -9,7 +9,7 @@
       </b-badge>
     </b-list-group-item>
     <b-list-group-item v-if="isClosed">
-      Average:
+      Average vote:
       <b-badge variant="success" class="float-right">
         {{ average }}
       </b-badge>

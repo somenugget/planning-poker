@@ -10,6 +10,7 @@ module Room::Representer
 
     property :id
     property :name
+    property :closed
 
     property :current_user,
              decorator: User::Representer::Json,
@@ -17,6 +18,9 @@ module Room::Representer
 
     property :link_to_share,
              getter: ->(options:, **) { options[:user_options][:link_to_share] }
+
+    property :average,
+             getter: ->(options:, **) { options[:user_options][:average] }
 
     property :question do
       property :content
