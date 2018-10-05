@@ -27,8 +27,10 @@ class RoomUsersController < ApplicationController
   end
 
   def new_join
-    run(RoomUser::Join::Present)
-    render cell(RoomUser::Cell::Join, result[:model], room: result[:room])
+    result = RoomUser::Join::Present.(params: params.permit!)
+
+    cell_class = result[:room].closed? ? RoomUser::Cell::Closed : RoomUser::Cell::Join
+    render cell(cell_class, result[:model], room: result[:room])
   end
 
   def join_user_to_room

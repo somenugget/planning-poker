@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe Room::Cell::Show, type: :cell do
   include Cell::Testing
   controller RoomsController

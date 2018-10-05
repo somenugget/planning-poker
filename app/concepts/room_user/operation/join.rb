@@ -1,11 +1,16 @@
 class RoomUser::Join < Trailblazer::Operation
   class Present < Trailblazer::Operation
     step :find_room_by_slug!
+    step :ensure_room_is_opened
     step Model(RoomUser, :new)
     step Contract::Build(constant: RoomUser::Contract::Join)
 
     def find_room_by_slug!(options, params:, **)
       options[:room] = Room.find_by! slug: params[:slug]
+    end
+
+    def ensure_room_is_opened(options, **)
+      !options[:room].closed?
     end
   end
 
